@@ -9,9 +9,7 @@ import router from './routers/index'
 
 const app = express();
 
-app.use(cors({
-    credentials: true
-}));
+app.use(cors());
 
 app.use(compression());
 app.use(cookieParser());
