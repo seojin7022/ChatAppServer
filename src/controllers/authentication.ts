@@ -6,7 +6,7 @@ import { authentication, random } from '../helpers/index';
 export const login = async (req: express.Request, res: express.Response) => {
     try {
         const { email, password } = req.body;
-
+        
         if (!email || !password) {
             return res.sendStatus(400);
         }
@@ -27,9 +27,10 @@ export const login = async (req: express.Request, res: express.Response) => {
         user.authentication.sessionToken = authentication(salt, user._id.toString());
 
         await user.save();
-
-        res.cookie('JINI-AUTH', user.authentication.sessionToken, { domain: '34.22.75.122', path: '/', secure: false }).send("cookie set");
-        return res.status(200).json(user).end();
+        
+        res.cookie('JINI-AUTH', user.authentication.sessionToken, { secure: false, maxAge: 100000000 });
+        
+        return res.status(200).json(user);
 
     } catch (error) {
         console.log(error);

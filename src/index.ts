@@ -9,7 +9,10 @@ import router from './routers/index'
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin: ["https://seojin7022.github.io/ChatApp", "http://localhost:3000"],
+    credentials: true
+}));
 
 app.use(compression());
 app.use(cookieParser());
