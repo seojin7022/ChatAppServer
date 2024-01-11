@@ -28,7 +28,7 @@ export const login = async (req: express.Request, res: express.Response) => {
 
         await user.save();
 
-        res.cookie('JINI-AUTH', user.authentication.sessionToken, { domain: '34.22.75.122', path: '/', secure: false });
+        res.cookie('JINI-AUTH', user.authentication.sessionToken, { domain: '34.22.75.122', path: '/', secure: false }).send("cookie set");
         return res.status(200).json(user).end();
 
     } catch (error) {
