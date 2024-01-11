@@ -5,7 +5,7 @@ const UserSchema = new mongoose.Schema({
     email: { type: String, required: true },
     chats: [{type: mongoose.Schema.Types.ObjectId, ref: 'Chat'}],
     profile: {
-        image: { type: String, required: true },
+        image: { type: String, required: true, default: "" },
         intro: {type: String, default: "Hello!"}
     },
     authentication: {
