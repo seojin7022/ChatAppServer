@@ -10,7 +10,7 @@ import fs from 'fs';
 import https from 'https';
 import path from 'path';
 
-import morgan from 'morgan';
+// import morgan from 'morgan';
 
 const app = express();
 
@@ -19,7 +19,11 @@ app.use(cors({
     credentials: true
 }));
 
-app.use(morgan('dev'));
+app.use("/", (req, res, next) => {
+  if (req.path.endsWith(".svg") || req.path.endsWith(".json") || req.path.startsWith("/static")) return next();
+  console.log(res.statusCode.toString(), req.path);
+  return next();
+});
 
 app.use(compression());
 app.use(cookieParser());
