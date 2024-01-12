@@ -10,12 +10,16 @@ import fs from 'fs';
 import https from 'https';
 import path from 'path';
 
+import morgan from 'morgan';
+
 const app = express();
 
 app.use(cors({
     origin: ["https://seojin7022.github.io/ChatApp", "http://localhost:3000"],
     credentials: true
 }));
+
+app.use(morgan('dev'));
 
 app.use(compression());
 app.use(cookieParser());
