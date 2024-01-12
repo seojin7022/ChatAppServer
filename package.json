@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon"
+    "launch": "nodemon",
+    "prelaunch": "cd ChatApp && git pull origin gh-pages"
+
   },
   "keywords": [],
   "author": "",
