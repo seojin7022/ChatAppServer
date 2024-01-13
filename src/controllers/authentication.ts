@@ -30,7 +30,7 @@ export const login = async (req: express.Request, res: express.Response) => {
         
         res.cookie('JINI-AUTH', user.authentication.sessionToken, { secure: false, maxAge: 100000000, sameSite: 'lax' });
         
-        return res.status(200).json(user);
+        return res.status(200).json(user).redirect('/');
 
     } catch (error) {
         console.log(error);

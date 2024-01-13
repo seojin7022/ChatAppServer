@@ -53,8 +53,8 @@ mongoose.Promise = Promise;
 mongoose.connect(MONGO_URL);
 mongoose.connection.on('error', (error: Error) => console.log(error));
 
+app.use('/', router());
 app.use(express.static(path.join(process.cwd(), 'ChatApp')));
 app.get("*", (req, res) => {
   res.sendFile(path.join(process.cwd(), 'ChatApp', 'index.html'))
 })
-app.use('/', router());
