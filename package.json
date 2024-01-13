@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "launch": "nodemon",
-    "prelaunch": "cd ChatApp && git pull origin gh-pages"
+    "prelaunch": "cd ChatApp && git pull origin gh-pages",
+    "deploy": "git add . && git commit -m \"Commit\" && git push origin main "
   },
   "keywords": [],
   "author": "",
