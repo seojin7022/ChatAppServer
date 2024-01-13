@@ -1,9 +1,10 @@
 import express from 'express'
-import {getChatFromId} from '../db/chats'
+import {getChatFromId, makeChat} from '../db/chats'
+import { getUserById } from '../db/users';
 
 export const chat = (req: express.Request, res: express.Response) => {
     try {
-        const { id } = req.body;
+        const { id } = req.params;
 
         if (!id) {
             console.log("The id is undefined");
@@ -17,6 +18,24 @@ export const chat = (req: express.Request, res: express.Response) => {
             return res.sendStatus(403);
         }
 
+        return res.status(200).json(chat).end();
+    } catch (error) {
+        console.log(error);
+        return res.sendStatus(403);
+    }
+}
+
+export const createChat = async (req: express.Request, res: express.Response) => {
+    try {
+        const { users, name } = req.body;
+        
+        const chat = await makeChat(users);
+        users.map(async (userId: any) => {
+            const user = await getUserById(userId);
+            user.chats.push({name, chatId: chat._id});
+            await user.save()
+        })
+        
         return res.status(200).json(chat).end();
     } catch (error) {
         console.log(error);

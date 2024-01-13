@@ -1,7 +1,8 @@
 import express from 'express';
 
-import { chat } from '../controllers/chat';
+import { chat, createChat } from '../controllers/chat';
 
 export default (router: express.Router) => {
-    router.post('/db/chat', chat);
+    router.get('/db/chat/:id', chat);
+    router.post('/db/createChat', createChat);
 };

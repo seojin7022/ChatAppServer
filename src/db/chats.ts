@@ -5,16 +5,18 @@ const ChatSchema = new mongoose.Schema({
     records: [{ time: { type: mongoose.Schema.Types.Date }, chatting: {type: String} }],
     lastRecord: {
         time: { type: mongoose.Schema.Types.Date },
-        chatting: {type: String}
-    }
+        chatting: {type: String, default: ""}
+    },
+    count: {type: Number, default: 0}
 });
 
 export const ChatModel = mongoose.model('Chat', ChatSchema);
 
-export const getChatsFromUser = (user: mongoose.Types.ObjectId) => {
-    return ChatModel.find({ users: { $in: [user] } }).sort({'lastRecord.time': 1});
-}
-
 export const getChatFromId = (id: string) => {
     return ChatModel.find({ _id: id });
+}
+
+export const makeChat = async (users: object[]) => {
+    
+    return new ChatModel({users}).save().then((chat) => chat.toObject());
 }

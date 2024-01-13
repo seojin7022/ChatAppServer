@@ -3,7 +3,10 @@ import mongoose from 'mongoose';
 const UserSchema = new mongoose.Schema({
     username: { type: String, required: true },
     email: { type: String, required: true },
-    chats: [{type: mongoose.Schema.Types.ObjectId, ref: 'Chat'}],
+    chats: [{
+        name: { type: String },
+        chatId: { type: mongoose.Schema.Types.ObjectId, ref: 'Chat' }
+    }],
     profile: {
         image: { type: String, default: "" },
         intro: {type: String, default: "Hello!"}
@@ -12,7 +15,9 @@ const UserSchema = new mongoose.Schema({
         password: { type: String, required: true, select: false },
         salt: { type: String, select: false },
         sessionToken: { type: String, select: false }
-    }
+    },
+
+    friends: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
 });
 
 export const UserModel = mongoose.model('User', UserSchema);
