@@ -13,7 +13,7 @@ const ChatSchema = new mongoose.Schema({
 export const ChatModel = mongoose.model('Chat', ChatSchema);
 
 export const getChatFromId = (id: string) => {
-    return ChatModel.find({ _id: id });
+    return ChatModel.findOne({ _id: id });
 }
 
 export const makeChat = async (users: object[]) => {
