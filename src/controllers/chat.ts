@@ -2,7 +2,7 @@ import express from 'express'
 import {getChatFromId, makeChat} from '../db/chats'
 import { getUserById } from '../db/users';
 
-export const chat = (req: express.Request, res: express.Response) => {
+export const chat = async (req: express.Request, res: express.Response) => {
     try {
         const { id } = req.params;
 
@@ -14,7 +14,7 @@ export const chat = (req: express.Request, res: express.Response) => {
             return res.sendStatus(403);
         }
 
-        const chat = getChatFromId(id);
+        const chat = await getChatFromId(id);
 
         if (!chat) {
             console.log("The id doesn't exist");
