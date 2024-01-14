@@ -58,7 +58,7 @@ io.on('connection', async (socket) => {
   });
 
   socket.on('chat record', async (data) => {
-    await ChatModel.updateOne({ _id: data.id }, { $set: { records: data.chatRecord, lastRecord: data.chatRecord[data.chatRecord.length - 1] } });
+    await ChatModel.updateOne({ _id: data.id }, { $set: { records: data.chatRecords, lastRecord: data.chatRecords[data.chatRecords.length - 1] } });
     console.log("Update Succeed");
     
   })
