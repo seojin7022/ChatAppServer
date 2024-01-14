@@ -31,11 +31,13 @@ export const getAllUserChats = async (req: express.Request, res: express.Respons
         
         for (let item = 0; item < user.chats.length; item++) {
             chats.push({ name: user.chats[item].name, chatData: await getChatFromId(user.chats[item].chatId.toString()) });
-            console.log(chats);
         }
 
         
-        console.log(chats);
+        chats.forEach((item) => {
+            console.log(item.chatData);
+            
+        })
         
 
         return res.status(200).json(chats).end();
