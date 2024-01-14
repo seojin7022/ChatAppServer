@@ -35,6 +35,7 @@ export const getAllUserChats = async (req: express.Request, res: express.Respons
         }
 
         
+        console.log(chats);
         
 
         return res.status(200).json(chats).end();
