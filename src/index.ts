@@ -9,6 +9,7 @@ import router from './routers/index'
 import fs from 'fs';
 import https from 'https';
 import path from 'path';
+import {Server} from 'socket.io';
 
 // import morgan from 'morgan';
 
@@ -41,6 +42,18 @@ app.use(bodyParser.json());
 //   });
 
 const server = http.createServer(app);
+const io = new Server(server);
+
+io.on('connection', (socket) => {
+  socket.on('chat message', (msg) => {
+    io.emit('chat message', msg);
+  });
+
+  socket.on('disconnect', () => {
+    console.log("Disconnect");
+    
+  })
+})
 
 server.listen(80, () => {
   console.log("Server lauched ✅");
