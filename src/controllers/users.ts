@@ -4,11 +4,11 @@ import mongoose from 'mongoose'
 import { getUsers, getUserBySessionToken } from '../db/users';
 import { getChatFromId } from '../db/chats';
 
-export const getAllUsers = async (req: express.Request, res: express.Response) => {
+export const getUser = async (req: express.Request, res: express.Response) => {
     try {
-        const users = await getUsers();
+        const user = await getUserBySessionToken(req.cookies['JINI-AUTH']);
 
-        return res.status(200).json(users);
+        return res.status(200).json(user);
     } catch (error) {
         console.log(error);
         return res.sendStatus(400);
