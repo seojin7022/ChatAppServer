@@ -6,10 +6,9 @@ import compression from 'compression';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import router from './routers/index'
-import fs from 'fs';
-import https from 'https';
 import path from 'path';
-import {Server} from 'socket.io';
+import { Server } from 'socket.io';
+import { ChatModel } from 'db/chats';
 
 // import morgan from 'morgan';
 
@@ -41,15 +40,28 @@ app.use(bodyParser.json());
 //     console.log('HTTPS server running on port 8080');
 //   });
 
+
+const MONGO_URL = 'mongodb+srv://seojin7022:seojin7022@cluster0.y7y5klt.mongodb.net/?retryWrites=true&w=majority'
+
+mongoose.Promise = Promise;
+mongoose.connect(MONGO_URL);
+mongoose.connection.on('error', (error: Error) => console.log(error));
+
 const server = http.createServer(app);
 const io = new Server(server);
 
-io.on('connection', (socket) => {
+io.on('connection', async (socket) => {
   socket.on('chat message', (msg) => {
     console.log(msg);
     
     io.emit('chat message', msg);
   });
+
+  socket.on('chat record', async (data) => {
+    await ChatModel.updateOne({ _id: data.id }, { $set: { records: data.chatRecord, lastRecord: data.chatRecord[data.chatRecord.length - 1] } });
+    console.log("Update Succeed");
+    
+  })
 
   socket.on('disconnect', () => {
     console.log("Disconnect");
@@ -62,11 +74,7 @@ server.listen(80, () => {
   
 })
 
-const MONGO_URL = 'mongodb+srv://seojin7022:seojin7022@cluster0.y7y5klt.mongodb.net/?retryWrites=true&w=majority'
 
-mongoose.Promise = Promise;
-mongoose.connect(MONGO_URL);
-mongoose.connection.on('error', (error: Error) => console.log(error));
 
 app.use('/', router());
 app.use(express.static(path.join(process.cwd(), 'ChatApp')));
