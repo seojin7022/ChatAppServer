@@ -6,6 +6,9 @@ export const chat = (req: express.Request, res: express.Response) => {
     try {
         const { id } = req.params;
 
+        console.log(id);
+        
+
         if (!id) {
             console.log("The id is undefined");
             return res.sendStatus(403);
