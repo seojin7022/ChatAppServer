@@ -8,7 +8,7 @@ import mongoose from 'mongoose';
 import router from './routers/index'
 import path from 'path';
 import { Server } from 'socket.io';
-import { ChatModel } from 'db/chats';
+import { ChatModel } from './db/chats';
 
 // import morgan from 'morgan';
 
